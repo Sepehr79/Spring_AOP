@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <bean id="obj" class="logic.Processor"/>
+    <bean id="obj2" class="logic.Validator"/>
+
+    <bean id="ba" class="advices.BeforeAdvice"/>
+    <bean id="after" class="advices.AfterAdviser"/>
+    <bean id="around" class="advices.AroundAdvice"/>
+    <bean id="throw" class="advices.ThrowsAdviser"/>
+
+    <bean id="proxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target" ref="obj"/>
+        <property name="interceptorNames">
+            <list>
+                <value>ba</value>
+                <value>after</value>
+                <value>around</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="proxy2" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target" ref="obj2"/>
+        <property name="interceptorNames">
+            <list>
+                <value>throw</value>
+            </list>
+        </property>
+    </bean>
+</beans>
